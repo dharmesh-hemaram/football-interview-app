@@ -176,9 +176,9 @@ export const mockMatches: Match[] = [
     id: 'match-2',
     homeTeamId: 'team-3',
     awayTeamId: 'team-1',
-    date: new Date(Date.now() + 172800000).toISOString(),
-    status: 'scheduled',
-    homeScore: 0,
+    date: new Date().toISOString(),
+    status: 'live',
+    homeScore: 1,
     awayScore: 0,
   },
   {
