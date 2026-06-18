@@ -1,0 +1,22 @@
+{
+  "name": "football-interview-app",
+  "version": "1.0.0",
+  "description": "Football App Interview Test - React + Redux + TypeScript",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "install:all": "npm install && npm install -w backend && npm install -w frontend",
+    "dev": "npm run dev:backend & npm run dev:frontend",
+    "dev:backend": "npm run dev -w backend",
+    "dev:frontend": "npm run dev -w frontend",
+    "build:all": "npm run build -w backend && npm run build -w frontend",
+    "start": "npm run dev"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}
