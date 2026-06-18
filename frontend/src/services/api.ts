@@ -29,17 +29,37 @@ export const playerService = {
 };
 
 // ============= TEAMS =============
-// TODO: Candidate should implement this following playerService pattern
 export const teamService = {
-  // getAll: async () => { ... },
-  // getById: async (id: string) => { ... },
-  // update: async (id: string, data: Partial<Team>) => { ... },
+  getAll: async () => {
+    const response = await api.get<ApiResponse<Team[]>>('/teams');
+    return response.data.data;
+  },
+
+  getById: async (id: string) => {
+    const response = await api.get<ApiResponse<Team>>(`/teams/${id}`);
+    return response.data.data;
+  },
+
+  update: async (id: string, data: Partial<Team>) => {
+    const response = await api.put<ApiResponse<Team>>(`/teams/${id}`, data);
+    return response.data.data;
+  },
 };
 
 // ============= MATCHES =============
-// TODO: Candidate should implement this following playerService pattern
 export const matchService = {
-  // getAll: async () => { ... },
-  // getById: async (id: string) => { ... },
-  // update: async (id: string, data: Partial<Match>) => { ... },
+  getAll: async () => {
+    const response = await api.get<ApiResponse<Match[]>>('/matches');
+    return response.data.data;
+  },
+
+  getById: async (id: string) => {
+    const response = await api.get<ApiResponse<Match>>(`/matches/${id}`);
+    return response.data.data;
+  },
+
+  update: async (id: string, data: Partial<Match>) => {
+    const response = await api.put<ApiResponse<Match>>(`/matches/${id}`, data);
+    return response.data.data;
+  },
 };

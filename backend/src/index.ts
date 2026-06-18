@@ -161,31 +161,28 @@ io.on('connection', (socket) => {
   });
 });
 
-// Simulate live match updates
+// Simulate live match updates - broadcast to all clients every 5 minutes
 setInterval(() => {
   const liveMatch = matches.find((m) => m.status === 'live');
-  if (liveMatch) {
-    // Randomly update score
-    if (Math.random() > 0.7) {
-      if (Math.random() > 0.5) {
-        liveMatch.homeScore += 1;
-      } else {
-        liveMatch.awayScore += 1;
-      }
+  if (!liveMatch) return;
 
-      const notification: Notification = {
-        id: uuid(),
-        type: 'goal',
-        title: 'GOAL!',
-        message: `Match ${liveMatch.id} score updated`,
-        timestamp: Date.now(),
-        matchId: liveMatch.id,
-        read: false,
-      };
-
-      io.to(`match-${liveMatch.id}`).emit('notification', notification);
-    }
+  if (Math.random() > 0.5) {
+    liveMatch.homeScore += 1;
+  } else {
+    liveMatch.awayScore += 1;
   }
+
+  const notification: Notification = {
+    id: uuid(),
+    type: 'goal',
+    title: 'GOAL!',
+    message: `Match ${liveMatch.id} score updated: ${liveMatch.homeScore} - ${liveMatch.awayScore}`,
+    timestamp: Date.now(),
+    matchId: liveMatch.id,
+    read: false,
+  };
+
+  io.emit('notification', notification);
 }, 15000);
 
 // Health check

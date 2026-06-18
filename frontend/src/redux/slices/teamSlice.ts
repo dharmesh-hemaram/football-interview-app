@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Team } from '@types/index';
-// TODO: Import teamService once it's implemented
-// import { teamService } from '@services/api';
+import { teamService } from '@services/api';
 
 interface TeamState {
   list: Team[];
@@ -17,34 +16,92 @@ const initialState: TeamState = {
   error: null,
 };
 
-// TODO: Create async thunks following the playerSlice pattern:
-// - fetchTeams
-// - fetchTeamById
-// - updateTeam
+export const fetchTeams = createAsyncThunk('teams/fetchAll', async () => {
+  return teamService.getAll();
+});
 
-// Example structure (uncomment and complete):
-// export const fetchTeams = createAsyncThunk('teams/fetchAll', async () => {
-//   return teamService.getAll();
-// });
+export const fetchTeamById = createAsyncThunk(
+  'teams/fetchById',
+  async (id: string) => {
+    return teamService.getById(id);
+  }
+);
+
+export const updateTeam = createAsyncThunk(
+  'teams/update',
+  async ({ id, data }: { id: string; data: Partial<Team> }) => {
+    return teamService.update(id, data);
+  }
+);
 
 const teamSlice = createSlice({
   name: 'teams',
   initialState,
   reducers: {
-    // TODO: Add reducers
-    // clearSelectedTeam: (state) => { ... },
-    // clearError: (state) => { ... },
+    clearSelectedTeam: (state) => {
+      state.selectedTeam = null;
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
-    // TODO: Add extra reducers for async thunks
-    // Follow the playerSlice pattern
+    builder
+      .addCase(fetchTeams.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTeams.fulfilled, (state, action) => {
+        state.loading = false;
+        state.list = action.payload;
+      })
+      .addCase(fetchTeams.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch teams';
+      });
+
+    builder
+      .addCase(fetchTeamById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTeamById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedTeam = action.payload;
+      })
+      .addCase(fetchTeamById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch team';
+      });
+
+    builder
+      .addCase(updateTeam.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateTeam.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.list.findIndex((t) => t.id === action.payload.id);
+        if (index !== -1) {
+          state.list[index] = action.payload;
+        }
+        if (state.selectedTeam?.id === action.payload.id) {
+          state.selectedTeam = action.payload;
+        }
+      })
+      .addCase(updateTeam.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to update team';
+      });
   },
 });
 
-// TODO: Add selectors
-// export const selectTeams = (state: any) => state.teams.list;
-// export const selectSelectedTeam = (state: any) => state.teams.selectedTeam;
-// etc.
+export const selectTeams = (state: any) => state.teams.list;
+export const selectSelectedTeam = (state: any) => state.teams.selectedTeam;
+export const selectTeamsLoading = (state: any) => state.teams.loading;
+export const selectTeamsError = (state: any) => state.teams.error;
+export const selectTeamsByCountry = (state: any, country: string) =>
+  state.teams.list.filter((t: Team) => t.country === country);
 
 export const teamActions = teamSlice.actions;
 export default teamSlice.reducer;
