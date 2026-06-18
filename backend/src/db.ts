@@ -4,7 +4,7 @@ export const mockTeams: Team[] = [
   {
     id: 'team-1',
     name: 'Manchester United',
-    logo: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_badge.png',
+    logo: 'https://crests.football-data.org/66.svg',
     country: 'England',
     founded: 1878,
     wins: 15,
