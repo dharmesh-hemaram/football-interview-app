@@ -86,7 +86,12 @@ export const MatchDetailPage: React.FC = () => {
             <Badge variant={statusVariant(match.status)}>
               {match.status === 'live' ? '🔴 LIVE' : match.status.toUpperCase()}
             </Badge>
-            <small className="text-muted">{new Date(match.date).toLocaleString()}</small>
+            <div className="text-end">
+              <div className="small text-muted">{new Date(match.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</div>
+              {homeTeam?.stadium && (
+                <div className="small text-muted">🏟 {homeTeam.stadium}</div>
+              )}
+            </div>
           </div>
 
           <div className="row align-items-center text-center">

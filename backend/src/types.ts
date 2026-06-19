@@ -4,6 +4,7 @@ export interface Player {
   name: string;
   position: 'GK' | 'DEF' | 'MID' | 'FWD';
   teamId: string;
+  nationality: string;
   goals: number;
   assists: number;
   matches: number;
@@ -15,9 +16,11 @@ export interface Player {
 export interface Team {
   id: string;
   name: string;
+  shortName: string;
   logo: string;
   country: string;
   founded: number;
+  stadium: string;
   wins: number;
   losses: number;
   draws: number;

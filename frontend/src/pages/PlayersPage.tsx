@@ -59,7 +59,8 @@ export const PlayersPage: React.FC = () => {
                   </div>
                 </div>
                 <h5 className="card-title mb-1">{player.name}</h5>
-                <p className="text-muted small mb-3">{teamName(player.teamId)}</p>
+                <p className="text-muted small mb-1">{teamName(player.teamId)}</p>
+                <p className="text-muted small mb-3">{player.nationality}</p>
                 <div className="row text-center mb-3">
                   <div className="col-4">
                     <small className="text-muted d-block">Goals</small>

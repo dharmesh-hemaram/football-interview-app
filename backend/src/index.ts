@@ -161,26 +161,74 @@ io.on('connection', (socket) => {
   });
 });
 
-// Simulate live match updates - broadcast to all clients every 5 minutes
+// Simulate live match updates - broadcast to all clients every 15 seconds
 setInterval(() => {
   const liveMatch = matches.find((m) => m.status === 'live');
   if (!liveMatch) return;
 
-  if (Math.random() > 0.5) {
-    liveMatch.homeScore += 1;
-  } else {
-    liveMatch.awayScore += 1;
-  }
+  const homeTeam = teams.find((t) => t.id === liveMatch.homeTeamId);
+  const awayTeam = teams.find((t) => t.id === liveMatch.awayTeamId);
+  const homePlayers = players.filter((p) => p.teamId === liveMatch.homeTeamId && p.position !== 'GK');
+  const awayPlayers = players.filter((p) => p.teamId === liveMatch.awayTeamId && p.position !== 'GK');
 
-  const notification: Notification = {
-    id: uuid(),
-    type: 'goal',
-    title: 'GOAL!',
-    message: `Match ${liveMatch.id} score updated: ${liveMatch.homeScore} - ${liveMatch.awayScore}`,
-    timestamp: Date.now(),
-    matchId: liveMatch.id,
-    read: false,
-  };
+  const roll = Math.random();
+  let notification: Notification;
+
+  if (roll < 0.40) {
+    // Home team goal
+    const scorer = homePlayers[Math.floor(Math.random() * homePlayers.length)];
+    liveMatch.homeScore += 1;
+    notification = {
+      id: uuid(),
+      type: 'goal',
+      title: '⚽ GOAL!',
+      message: `${scorer.name} scores for ${homeTeam?.shortName ?? homeTeam?.name}! ${homeTeam?.shortName} ${liveMatch.homeScore}–${liveMatch.awayScore} ${awayTeam?.shortName}`,
+      timestamp: Date.now(),
+      matchId: liveMatch.id,
+      read: false,
+    };
+  } else if (roll < 0.70) {
+    // Away team goal
+    const scorer = awayPlayers[Math.floor(Math.random() * awayPlayers.length)];
+    liveMatch.awayScore += 1;
+    notification = {
+      id: uuid(),
+      type: 'goal',
+      title: '⚽ GOAL!',
+      message: `${scorer.name} scores for ${awayTeam?.shortName ?? awayTeam?.name}! ${homeTeam?.shortName} ${liveMatch.homeScore}–${liveMatch.awayScore} ${awayTeam?.shortName}`,
+      timestamp: Date.now(),
+      matchId: liveMatch.id,
+      read: false,
+    };
+  } else if (roll < 0.88) {
+    // Yellow card
+    const allOutfield = [...homePlayers, ...awayPlayers];
+    const player = allOutfield[Math.floor(Math.random() * allOutfield.length)];
+    const playerTeam = teams.find((t) => t.id === player.teamId);
+    notification = {
+      id: uuid(),
+      type: 'match_update',
+      title: '🟨 Yellow Card',
+      message: `${player.name} (${playerTeam?.shortName}) has been booked`,
+      timestamp: Date.now(),
+      matchId: liveMatch.id,
+      read: false,
+    };
+  } else {
+    // Red card
+    const allOutfield = [...homePlayers, ...awayPlayers];
+    const player = allOutfield[Math.floor(Math.random() * allOutfield.length)];
+    const playerTeam = teams.find((t) => t.id === player.teamId);
+    notification = {
+      id: uuid(),
+      type: 'red_card',
+      title: '🟥 Red Card',
+      message: `${player.name} (${playerTeam?.shortName}) has been sent off!`,
+      timestamp: Date.now(),
+      matchId: liveMatch.id,
+      read: false,
+    };
+  }
 
   io.emit('notification', notification);
 }, 15000);

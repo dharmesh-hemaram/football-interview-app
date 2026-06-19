@@ -94,11 +94,14 @@ export const PlayerDetailPage: React.FC = () => {
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <div>
                   <h2 className="mb-1">{player.name}</h2>
-                  <div className="d-flex gap-2 align-items-center">
+                  <div className="d-flex gap-2 align-items-center flex-wrap">
                     <Badge variant={positionColor[player.position] as any}>
                       {player.position}
                     </Badge>
                     <Badge variant="secondary">#{player.jerseyNumber}</Badge>
+                    {player.nationality && (
+                      <span className="text-muted small">{player.nationality}</span>
+                    )}
                     {playerTeam && (
                       <span
                         className="text-muted small"
