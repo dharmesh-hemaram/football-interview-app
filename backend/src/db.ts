@@ -47,6 +47,8 @@ export const mockPlayers: Player[] = [
     assists: 2,
     matches: 18,
     jerseyNumber: 5,
+    yellowCards: 3,
+    redCards: 0,
   },
   {
     id: 'player-2',
@@ -57,16 +59,20 @@ export const mockPlayers: Player[] = [
     assists: 5,
     matches: 18,
     jerseyNumber: 10,
+    yellowCards: 2,
+    redCards: 0,
   },
   {
     id: 'player-3',
-    name: 'David de Gea',
+    name: 'André Onana',
     position: 'GK',
     teamId: 'team-1',
     goals: 0,
     assists: 0,
     matches: 18,
-    jerseyNumber: 1,
+    jerseyNumber: 24,
+    yellowCards: 1,
+    redCards: 0,
   },
   {
     id: 'player-4',
@@ -77,6 +83,8 @@ export const mockPlayers: Player[] = [
     assists: 10,
     matches: 18,
     jerseyNumber: 8,
+    yellowCards: 4,
+    redCards: 0,
   },
   // Liverpool Players
   {
@@ -88,6 +96,8 @@ export const mockPlayers: Player[] = [
     assists: 6,
     matches: 20,
     jerseyNumber: 11,
+    yellowCards: 1,
+    redCards: 0,
   },
   {
     id: 'player-6',
@@ -98,26 +108,32 @@ export const mockPlayers: Player[] = [
     assists: 1,
     matches: 19,
     jerseyNumber: 4,
+    yellowCards: 2,
+    redCards: 0,
   },
   {
     id: 'player-7',
-    name: 'Alisson',
+    name: 'Alisson Becker',
     position: 'GK',
     teamId: 'team-2',
     goals: 0,
     assists: 0,
     matches: 20,
     jerseyNumber: 1,
+    yellowCards: 0,
+    redCards: 0,
   },
   {
     id: 'player-8',
-    name: 'Luis Diaz',
+    name: 'Luis Díaz',
     position: 'FWD',
     teamId: 'team-2',
     goals: 10,
     assists: 4,
     matches: 18,
     jerseyNumber: 7,
+    yellowCards: 3,
+    redCards: 0,
   },
   // Manchester City Players
   {
@@ -129,6 +145,8 @@ export const mockPlayers: Player[] = [
     assists: 3,
     matches: 18,
     jerseyNumber: 9,
+    yellowCards: 1,
+    redCards: 0,
   },
   {
     id: 'player-10',
@@ -139,6 +157,8 @@ export const mockPlayers: Player[] = [
     assists: 0,
     matches: 15,
     jerseyNumber: 25,
+    yellowCards: 4,
+    redCards: 1,
   },
   {
     id: 'player-11',
@@ -149,6 +169,8 @@ export const mockPlayers: Player[] = [
     assists: 0,
     matches: 18,
     jerseyNumber: 31,
+    yellowCards: 0,
+    redCards: 0,
   },
   {
     id: 'player-12',
@@ -159,6 +181,8 @@ export const mockPlayers: Player[] = [
     assists: 8,
     matches: 17,
     jerseyNumber: 17,
+    yellowCards: 3,
+    redCards: 0,
   },
 ];
 
@@ -171,6 +195,7 @@ export const mockMatches: Match[] = [
     status: 'scheduled',
     homeScore: 0,
     awayScore: 0,
+    events: [],
   },
   {
     id: 'match-2',
@@ -180,6 +205,11 @@ export const mockMatches: Match[] = [
     status: 'live',
     homeScore: 1,
     awayScore: 0,
+    events: [
+      { id: 'evt-1', type: 'goal', minute: 23, playerId: 'player-9', teamId: 'team-3' },
+      { id: 'evt-2', type: 'yellow_card', minute: 35, playerId: 'player-1', teamId: 'team-1' },
+      { id: 'evt-3', type: 'yellow_card', minute: 41, playerId: 'player-10', teamId: 'team-3' },
+    ],
   },
   {
     id: 'match-3',
@@ -189,5 +219,13 @@ export const mockMatches: Match[] = [
     status: 'completed',
     homeScore: 2,
     awayScore: 1,
+    events: [
+      { id: 'evt-4', type: 'goal', minute: 15, playerId: 'player-5', teamId: 'team-2' },
+      { id: 'evt-5', type: 'yellow_card', minute: 34, playerId: 'player-12', teamId: 'team-3' },
+      { id: 'evt-6', type: 'goal', minute: 58, playerId: 'player-8', teamId: 'team-2' },
+      { id: 'evt-7', type: 'red_card', minute: 67, playerId: 'player-10', teamId: 'team-3' },
+      { id: 'evt-8', type: 'goal', minute: 72, playerId: 'player-9', teamId: 'team-3' },
+      { id: 'evt-9', type: 'yellow_card', minute: 89, playerId: 'player-6', teamId: 'team-2' },
+    ],
   },
 ];

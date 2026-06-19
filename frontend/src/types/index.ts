@@ -8,6 +8,8 @@ export interface Player {
   assists: number;
   matches: number;
   jerseyNumber: number;
+  yellowCards: number;
+  redCards: number;
 }
 
 export interface Team {
@@ -22,6 +24,14 @@ export interface Team {
   goalsDifference: number;
 }
 
+export interface MatchEvent {
+  id: string;
+  type: 'goal' | 'yellow_card' | 'red_card' | 'own_goal' | 'penalty';
+  minute: number;
+  playerId: string;
+  teamId: string;
+}
+
 export interface Match {
   id: string;
   homeTeamId: string;
@@ -30,6 +40,7 @@ export interface Match {
   status: 'scheduled' | 'live' | 'completed';
   homeScore: number;
   awayScore: number;
+  events: MatchEvent[];
 }
 
 export interface Notification {
