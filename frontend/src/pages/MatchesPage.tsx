@@ -21,9 +21,9 @@ export const MatchesPage: React.FC = () => {
   const loading = useSelector((state: RootState) => selectMatchesLoading(state));
 
   useEffect(() => {
-    dispatch(fetchMatches());
-    dispatch(fetchTeams());
-  }, [dispatch]);
+    if (matches.length === 0) dispatch(fetchMatches());
+    if (teams.length === 0) dispatch(fetchTeams());
+  }, [dispatch, matches.length, teams.length]);
 
   const teamName = (id: string) =>
     teams.find((t: Team) => t.id === id)?.name ?? id;

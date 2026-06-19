@@ -22,9 +22,9 @@ export const PlayersPage: React.FC = () => {
   const loading = useSelector((state: RootState) => selectPlayersLoading(state));
 
   useEffect(() => {
-    dispatch(fetchPlayers());
-    dispatch(fetchTeams());
-  }, [dispatch]);
+    if (players.length === 0) dispatch(fetchPlayers());
+    if (teams.length === 0) dispatch(fetchTeams());
+  }, [dispatch, players.length, teams.length]);
 
   if (loading) {
     return <Spinner text="Loading players..." />;

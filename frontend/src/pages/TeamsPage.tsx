@@ -12,8 +12,8 @@ export const TeamsPage: React.FC = () => {
   const loading = useSelector((state: RootState) => selectTeamsLoading(state));
 
   useEffect(() => {
-    dispatch(fetchTeams());
-  }, [dispatch]);
+    if (teams.length === 0) dispatch(fetchTeams());
+  }, [dispatch, teams.length]);
 
   if (loading) {
     return <Spinner text="Loading teams..." />;
