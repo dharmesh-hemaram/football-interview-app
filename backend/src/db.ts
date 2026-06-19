@@ -4,7 +4,7 @@ export const mockTeams: Team[] = [
   {
     id: 'team-1',
     name: 'Manchester United',
-    logo: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_badge.png',
+    logo: 'https://crests.football-data.org/66.svg',
     country: 'England',
     founded: 1878,
     wins: 15,
@@ -176,9 +176,9 @@ export const mockMatches: Match[] = [
     id: 'match-2',
     homeTeamId: 'team-3',
     awayTeamId: 'team-1',
-    date: new Date(Date.now() + 172800000).toISOString(),
-    status: 'scheduled',
-    homeScore: 0,
+    date: new Date().toISOString(),
+    status: 'live',
+    homeScore: 1,
     awayScore: 0,
   },
   {

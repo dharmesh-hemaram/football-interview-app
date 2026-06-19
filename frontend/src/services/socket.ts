@@ -48,7 +48,11 @@ export const socketService = {
 
   onNotification: (callback: (notification: Notification) => void) => {
     if (socket) {
+      // Register on current connection and re-register on every reconnect
       socket.on('notification', callback);
+      socket.on('connect', () => {
+        socket?.on('notification', callback);
+      });
     }
   },
 

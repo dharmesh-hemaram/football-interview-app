@@ -39,14 +39,9 @@ const App: React.FC = () => {
         <Route path="/players" element={<PlayersPage />} />
         <Route path="/players/:id" element={<PlayerDetailPage />} />
 
-        {/* TODO: INCOMPLETE - Wire up teams routes */}
-        {/* <Route path="/teams" element={<TeamsPage />} />
-            <Route path="/teams/:id" element={<TeamDetailPage />} />
-        */}
-
-        {/* TODO: INCOMPLETE - Wire up matches routes */}
-        {/* <Route path="/matches" element={<MatchesPage />} />
-        */}
+        <Route path="/teams" element={<TeamsPage />} />
+        <Route path="/teams/:id" element={<TeamDetailPage />} />
+        <Route path="/matches" element={<MatchesPage />} />
 
         {/* Redirect to players as default */}
         <Route path="/" element={<PlayersPage />} />
