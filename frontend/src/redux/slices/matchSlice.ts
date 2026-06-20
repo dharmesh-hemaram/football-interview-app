@@ -102,6 +102,8 @@ export const selectMatchesLoading = (state: any) => state.matches.loading;
 export const selectMatchesError = (state: any) => state.matches.error;
 export const selectMatchesByStatus = (state: any, status: Match['status']) =>
   state.matches.list.filter((m: Match) => m.status === status);
+export const selectMatchesByTeam = (state: any, teamId: string) =>
+  state.matches.list.filter((m: Match) => m.homeTeamId === teamId || m.awayTeamId === teamId);
 
 export const matchActions = matchSlice.actions;
 export default matchSlice.reducer;
