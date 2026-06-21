@@ -7,14 +7,23 @@ import { mockTeams, mockPlayers, mockMatches } from './db.js';
 export function createApp() {
   const app = express();
   const httpServer = createServer(app);
+  const allowedOrigin = (origin: string | undefined) =>
+    !origin ||
+    /^https?:\/\/localhost:\d+$/.test(origin) ||
+    /\.csb\.app$/.test(origin);
+
+  const corsOptions = {
+    origin: (origin: string | undefined, cb: (e: Error | null, ok?: boolean) => void) =>
+      cb(null, allowedOrigin(origin)),
+    methods: ['GET', 'POST', 'PUT'],
+    credentials: true,
+  };
+
   const io = new Server(httpServer, {
-    cors: {
-      origin: ['http://localhost:3000', 'http://localhost:5173'],
-      methods: ['GET', 'POST'],
-    },
+    cors: corsOptions,
   });
 
-  app.use(cors());
+  app.use(cors(corsOptions));
   app.use(express.json());
 
   // Fresh in-memory state per app instance (important for test isolation)

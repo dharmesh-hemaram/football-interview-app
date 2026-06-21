@@ -3,7 +3,7 @@ const getBackendUrl = (): string => {
 
   const { hostname, protocol } = window.location;
 
-  // CodeSandbox forwards ports as: <id>-<port>.csb.app
+  // CodeSandbox forwards ports as: <id>-<port>.csb.app — replace whatever port is present with 3001
   if (hostname.endsWith('.csb.app')) {
     const backendHost = hostname.replace(/-\d+\.csb\.app$/, '-3001.csb.app');
     return `${protocol}//${backendHost}`;
