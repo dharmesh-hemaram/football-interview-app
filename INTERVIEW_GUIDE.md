@@ -1,8 +1,3 @@
-# React Bugs Interview Guide
-
-This branch contains **9 intentional React bugs** spread across the codebase.
-Each one targets a distinct anti-pattern. The candidate should find and fix them.
-
 ---
 
 ## Bug 1
