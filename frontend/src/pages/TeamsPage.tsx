@@ -1,23 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchTeams, selectTeams, selectTeamsLoading } from '@redux/slices/teamSlice';
+import { fetchTeams, selectTeams } from '@redux/slices/teamSlice';
 import type { RootState, AppDispatch } from '@redux/store';
-import { Card, CardBody, Badge, Spinner } from '@components/common';
+import { Card, CardBody, Badge } from '@components/common';
 
 export const TeamsPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const teams = useSelector((state: RootState) => selectTeams(state));
-  const loading = useSelector((state: RootState) => selectTeamsLoading(state));
-
   useEffect(() => {
     if (teams.length === 0) dispatch(fetchTeams());
   }, [dispatch, teams.length]);
-
-  if (loading) {
-    return <Spinner text="Loading teams..." />;
-  }
 
   return (
     <div className="container mt-5">

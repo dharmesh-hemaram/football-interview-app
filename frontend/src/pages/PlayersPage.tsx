@@ -22,9 +22,9 @@ export const PlayersPage: React.FC = () => {
   const loading = useSelector((state: RootState) => selectPlayersLoading(state));
 
   useEffect(() => {
-    if (players.length === 0) dispatch(fetchPlayers());
-    if (teams.length === 0) dispatch(fetchTeams());
-  }, [dispatch, players.length, teams.length]);
+    dispatch(fetchPlayers());
+    dispatch(fetchTeams());
+  }, [dispatch]);
 
   if (loading) {
     return <Spinner text="Loading players..." />;
@@ -43,8 +43,8 @@ export const PlayersPage: React.FC = () => {
       </div>
 
       <div className="row">
-        {players.map((player) => (
-          <div key={player.id} className="col-md-6 col-lg-4 mb-4">
+        {players.map((player, index) => (
+          <div key={index} className="col-md-6 col-lg-4 mb-4">
             <Card
               onClick={() => navigate(`/players/${player.id}`)}
               className="h-100"
