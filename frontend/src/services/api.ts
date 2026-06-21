@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import type { Player, Team, Match, ApiResponse } from '@types/index';
+import { BACKEND_URL } from './backendUrl';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3001/api';
+const API_URL = `${BACKEND_URL}/api`;
 
 const api: AxiosInstance = axios.create({
   baseURL: API_URL,
