@@ -7,7 +7,7 @@ Each one targets a distinct anti-pattern. The candidate should find and fix them
 
 ## Bug 1
 
-When filtering players by position, the cards jump around and display incorrect data — a card that was showing one player suddenly shows a different player's stats after the filter changes.
+On the Players page, expand a card's details using the "More" button, then change the position filter. The expanded state does not follow the player — a different player's card ends up expanded instead.
 
 ---
 
