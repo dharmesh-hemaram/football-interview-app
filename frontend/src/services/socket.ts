@@ -1,11 +1,12 @@
 import { io, Socket } from 'socket.io-client';
 import type { Notification } from '@types/index';
+import { BACKEND_URL } from './backendUrl';
 
 let socket: Socket | null = null;
 
 export const socketService = {
   connect: () => {
-    socket = io(import.meta.env.VITE_SOCKET_URL ?? 'http://localhost:3001', {
+    socket = io(BACKEND_URL, {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
