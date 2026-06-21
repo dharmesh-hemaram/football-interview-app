@@ -51,6 +51,10 @@ export const MatchDetailPage: React.FC = () => {
       dispatch(fetchPlayers());
       dispatch(fetchTeams());
     }
+
+    const interval = setInterval(() => {
+      if (id) dispatch(fetchMatchById(id));
+    }, 5000);
   }, [id, dispatch]);
 
   if (loading) return <Spinner text="Loading match..." />;

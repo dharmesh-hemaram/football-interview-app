@@ -7,6 +7,9 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ children, className = '', onClick }) => {
+  if (onClick) {
+    className = className + ' card-hoverable';
+  }
   return (
     <div
       className={`card ${className}`}

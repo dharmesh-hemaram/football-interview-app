@@ -34,13 +34,7 @@ export const PlayerDetailPage: React.FC = () => {
       dispatch(fetchPlayerById(id));
       dispatch(fetchTeams());
     }
-  }, [id, dispatch]);
-
-  useEffect(() => {
-    if (player && !formData) {
-      setFormData(player);
-    }
-  }, [player, formData]);
+  }, []);
 
   if (loading) {
     return <Spinner text="Loading player..." />;
@@ -54,6 +48,13 @@ export const PlayerDetailPage: React.FC = () => {
       </div>
     );
   }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (player && !formData) {
+      setFormData(player);
+    }
+  }, [player, formData]);
 
   const playerTeam = teams.find((t: Team) => t.id === player.teamId);
 

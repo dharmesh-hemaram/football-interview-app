@@ -7,23 +7,24 @@ import type { RootState, AppDispatch } from '@redux/store';
 import type { Team, Match } from '@types/index';
 import { Card, CardBody, Badge, Spinner } from '@components/common';
 
-const statusVariant = (status: string) => {
-  if (status === 'live') return 'danger';
-  if (status === 'completed') return 'success';
-  return 'secondary';
-};
-
 export const MatchesPage: React.FC = () => {
+  const statusVariant = (status: string) => {
+    if (status === 'live') return 'danger';
+    if (status === 'completed') return 'success';
+    return 'secondary';
+  };
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const matches = useSelector((state: RootState) => selectMatches(state));
   const teams = useSelector((state: RootState) => selectTeams(state));
   const loading = useSelector((state: RootState) => selectMatchesLoading(state));
 
+  const fetchOptions = { force: false };
+
   useEffect(() => {
-    if (matches.length === 0) dispatch(fetchMatches());
-    if (teams.length === 0) dispatch(fetchTeams());
-  }, [dispatch, matches.length, teams.length]);
+    if (matches.length === 0 || fetchOptions.force) dispatch(fetchMatches());
+    if (teams.length === 0 || fetchOptions.force) dispatch(fetchTeams());
+  }, [dispatch, matches.length, teams.length, fetchOptions]);
 
   const teamName = (id: string) =>
     teams.find((t: Team) => t.id === id)?.name ?? id;

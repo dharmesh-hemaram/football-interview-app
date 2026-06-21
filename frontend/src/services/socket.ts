@@ -5,7 +5,7 @@ let socket: Socket | null = null;
 
 export const socketService = {
   connect: () => {
-    socket = io('http://localhost:3001', {
+    socket = io(import.meta.env.VITE_SOCKET_URL ?? 'http://localhost:3001', {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
