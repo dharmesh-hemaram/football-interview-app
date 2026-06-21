@@ -10,7 +10,7 @@ A React + Redux + TypeScript application built for frontend interviews. The app 
 
 Open directly in the browser:
 
-[https://codesandbox.io/p/github/dharmesh-hemaram/football-interview-app/interview/react-bugs-exercise](https://codesandbox.io/p/github/dharmesh-hemaram/football-interview-app/interview/react-bugs-exercise)
+[https://codesandbox.io/p/github/dharmesh-hemaram/football-interview-app/interview/main](https://codesandbox.io/p/github/dharmesh-hemaram/football-interview-app/interview/main)
 
 Both the backend and frontend start automatically. No installation required.
 
