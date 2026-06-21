@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchPlayers, selectPlayers, selectPlayersLoading } from '@redux/slices/playerSlice';
@@ -20,6 +20,7 @@ export const PlayersPage: React.FC = () => {
   const players = useSelector((state: RootState) => selectPlayers(state));
   const teams = useSelector((state: RootState) => selectTeams(state));
   const loading = useSelector((state: RootState) => selectPlayersLoading(state));
+  const [positionFilter, setPositionFilter] = useState('ALL');
 
   useEffect(() => {
     dispatch(fetchPlayers());
@@ -33,6 +34,10 @@ export const PlayersPage: React.FC = () => {
   const teamName = (teamId: string) =>
     teams.find((t: Team) => t.id === teamId)?.name ?? teamId;
 
+  const filteredPlayers = positionFilter === 'ALL'
+    ? players
+    : players.filter(p => p.position === positionFilter);
+
   return (
     <div className="container mt-5">
       <div className="row mb-4">
@@ -40,10 +45,23 @@ export const PlayersPage: React.FC = () => {
           <h1>All Players</h1>
           <p className="text-muted">Browse all players across all teams</p>
         </div>
+        <div className="col-auto d-flex align-items-end">
+          <select
+            className="form-select"
+            value={positionFilter}
+            onChange={e => setPositionFilter(e.target.value)}
+          >
+            <option value="ALL">All Positions</option>
+            <option value="GK">Goalkeeper</option>
+            <option value="DEF">Defender</option>
+            <option value="MID">Midfielder</option>
+            <option value="FWD">Forward</option>
+          </select>
+        </div>
       </div>
 
       <div className="row">
-        {players.map((player, index) => (
+        {filteredPlayers.map((player, index) => (
           <div key={index} className="col-md-6 col-lg-4 mb-4">
             <Card
               onClick={() => navigate(`/players/${player.id}`)}
