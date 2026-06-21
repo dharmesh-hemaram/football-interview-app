@@ -1,0 +1,25 @@
+tasks:
+  - name: Backend
+    init: cd backend && npm install && npm run build
+    command: cd backend && npm start
+
+  - name: Frontend
+    init: cd frontend && npm install
+    command: |
+      export BACKEND_URL=$(gp url 3001)
+      echo "VITE_API_URL=${BACKEND_URL}/api" > .env
+      echo "VITE_SOCKET_URL=${BACKEND_URL}" >> .env
+      npm run dev -- --host
+
+ports:
+  - port: 3001
+    onOpen: ignore
+    visibility: public
+  - port: 5173
+    onOpen: open-browser
+    visibility: public
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
