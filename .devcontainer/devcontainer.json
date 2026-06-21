@@ -1,18 +1,24 @@
 {
   "name": "Football Interview App",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
-  "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+  "forwardPorts": [3001, 5173],
+  "portsAttributes": {
+    "3001": {
+      "label": "Backend API",
+      "onAutoForward": "silent"
+    },
+    "5173": {
+      "label": "Frontend App",
+      "onAutoForward": "openBrowser"
+    }
   },
-  "forwardPorts": [3000, 3001, 5173],
-  "postCreateCommand": "npm install && npm run install:all && npm run build:all",
+  "postCreateCommand": "npm run install:all && npm run build -w backend",
   "customizations": {
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "redhat.vscode-yaml",
-        "ms-azuretools.vscode-docker",
+        "dsznajder.es7-react-js-snippets",
         "reduxjs.redux-devtools"
       ],
       "settings": {
@@ -25,10 +31,21 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode"
         }
       }
+    },
+    "codesandbox": {
+      "tasks": {
+        "start-backend": {
+          "name": "Start Backend",
+          "command": "npm run start -w backend",
+          "runAtStart": true
+        },
+        "start-frontend": {
+          "name": "Start Frontend",
+          "command": "npm run dev -w frontend -- --host",
+          "runAtStart": true
+        }
+      }
     }
   },
-  "remoteUser": "node",
-  "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh,readonly"
-  ]
+  "remoteUser": "node"
 }
